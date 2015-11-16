@@ -3,4 +3,9 @@
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="enable_automatic_checkbox">enable_automatic_checkbox</string>
+    <string name="sleep_target_cycle">sleep_target_cycle</string>
+    <string name="sleep_target_hours">sleep_target_hours</string>
+    <string name="title_activity_sleep_chart">SleepChartActivity</string>
 </resources>

@@ -1,16 +1,34 @@
 package com.project.cse535.smartalarmapplication;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
+
+import com.project.cse535.smartalarmapplication.datastorage.ContextPreferenceChangeListener;
+import com.project.cse535.smartalarmapplication.datastorage.ContextPreferenceManager;
+import com.project.cse535.smartalarmapplication.datastorage.UserPreferenceChangeListener;
+import com.project.cse535.smartalarmapplication.datastorage.UserPreferencesManager;
 
 public class MainActivity extends AppCompatActivity {
+    ContextPreferenceManager mContextPref;
+    ContextPreferenceChangeListener mContextPrefChangeListener;
+    UserPreferencesManager mUserPref;
+    UserPreferenceChangeListener mUserPrefChangeListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mContextPref = new ContextPreferenceManager(this);
+        mUserPref = new UserPreferencesManager(this);
+        mContextPrefChangeListener = new ContextPreferenceChangeListener();
+        mUserPrefChangeListener = new UserPreferenceChangeListener();
+        mContextPref.registerListener(mContextPrefChangeListener);
+        mUserPref.registerListener(mUserPrefChangeListener);
     }
 
     @Override
@@ -29,9 +47,27 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this,SettingsActivity.class);
+            startActivity(settingsIntent);
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mContextPref.unregisterListener(mContextPrefChangeListener);
+        mUserPref.unregisterListener(mUserPrefChangeListener);
+    }
+
+    public void viewSleepPattern(View view){
+        Intent chartIntent = new Intent(this,SleepChartActivity.class);
+        startActivity(chartIntent);
+    }
+    public void forceSleep(View view){
+        mContextPref.setContext(ContextPreferenceManager.SLEEP_CONTEXT_KEY, false);
+        mContextPref.setContext(ContextPreferenceManager.SLEEP_CONTEXT_KEY, true);
     }
 }

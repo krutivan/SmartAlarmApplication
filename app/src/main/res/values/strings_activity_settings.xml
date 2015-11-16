@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="pref_title_automatic_alarm">Enable Automatic Alarm</string>
+    <string name="pref_description_automatic_alarm">Select to enable this application to set automatic alarms
+    </string>
+
+    <string name="pref_header_sleep_target">Set Sleep Target</string>
+    <string name="pref_title_set_target_cycle">Target Cycle</string>
+    <string name="pref_description_target_days">Selects whether the target hours are for a day, week, fortnight
+    </string>
+    <string-array name="pref_target_cycle_titles">
+        <item>Daily</item>
+        <item>Weekly</item>
+        <item>Fortnight</item>
+    </string-array>
+    <string-array name="pref_target_cycle_values">
+        <item>1</item>
+        <item>7</item>
+        <item>14</item>
+    </string-array>
+    <string name="pref_title_set_target_hours">Target Hours</string>
+    <string name="pref_description_target_hours">Select the target hours for the selected cycle
+    </string>
+</resources>
