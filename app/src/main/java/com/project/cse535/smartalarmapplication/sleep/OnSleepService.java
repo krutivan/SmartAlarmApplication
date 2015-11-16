@@ -12,9 +12,9 @@ public class OnSleepService extends Service {
     private class SleepAsyncTask extends AsyncTask<Void, Void, Void> {
         @Override
         protected Void doInBackground(Void... params) {
-            Uri uri = Uri.parse("content://com.android.deskclock /alarm");
-            ContentResolver r = getContentResolver();
-            Cursor c = r.query(uri, null, null, null, null);
+//            Uri uri = Uri.parse("content://com.android.deskclock /alarm");
+//            ContentResolver r = getContentResolver();
+//            Cursor c = r.query(uri, null, null, null, null);
             return null;
         }
     }

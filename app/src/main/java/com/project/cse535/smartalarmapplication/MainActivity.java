@@ -1,6 +1,11 @@
 package com.project.cse535.smartalarmapplication;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -8,6 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.project.cse535.smartalarmapplication.SensorandAlarm.GatherSensorData;
+import com.project.cse535.smartalarmapplication.SensorandAlarm.RepeatSensorServiceReceiver;
+import com.project.cse535.smartalarmapplication.SensorandAlarm.SensorDataReceiver;
 import com.project.cse535.smartalarmapplication.datastorage.ContextPreferenceChangeListener;
 import com.project.cse535.smartalarmapplication.datastorage.ContextPreferenceManager;
 import com.project.cse535.smartalarmapplication.datastorage.UserPreferenceChangeListener;
@@ -18,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     ContextPreferenceChangeListener mContextPrefChangeListener;
     UserPreferencesManager mUserPref;
     UserPreferenceChangeListener mUserPrefChangeListener;
+    SensorDataReceiver sensorReceiver ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +38,11 @@ public class MainActivity extends AppCompatActivity {
         mUserPrefChangeListener = new UserPreferenceChangeListener();
         mContextPref.registerListener(mContextPrefChangeListener);
         mUserPref.registerListener(mUserPrefChangeListener);
+        sensorReceiver = new SensorDataReceiver();
+        IntentFilter filter = new IntentFilter(GatherSensorData.ACTION);
+        LocalBroadcastManager.getInstance(this).registerReceiver(sensorReceiver, filter);
+
+        sensorServiceRepeatAlarm();
     }
 
     @Override
@@ -69,5 +83,22 @@ public class MainActivity extends AppCompatActivity {
     public void forceSleep(View view){
         mContextPref.setContext(ContextPreferenceManager.SLEEP_CONTEXT_KEY, false);
         mContextPref.setContext(ContextPreferenceManager.SLEEP_CONTEXT_KEY, true);
+    }
+
+    // Setup a recurring alarm every 15 minutes
+    public void sensorServiceRepeatAlarm() {
+        Toast.makeText(MainActivity.this, "Scheduling Alarm.", Toast.LENGTH_SHORT).show();
+        // Construct an intent that will execute the RepearSensorServiceReceiver
+        Intent intent = new Intent(getApplicationContext(), RepeatSensorServiceReceiver.class);
+        // Create a PendingIntent to be triggered when the alarm goes off
+        final PendingIntent pIntent = PendingIntent.getBroadcast(this, RepeatSensorServiceReceiver.REQUEST_CODE,
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        // Setup periodic alarm every 5 seconds
+        long firstMillis = System.currentTimeMillis(); // alarm is set right away
+        AlarmManager alarm = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        // First parameter is the type: ELAPSED_REALTIME, ELAPSED_REALTIME_WAKEUP, RTC_WAKEUP
+        // Interval can be INTERVAL_FIFTEEN_MINUTES, INTERVAL_HALF_HOUR, INTERVAL_HOUR, INTERVAL_DAY
+        alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillis,
+                AlarmManager.INTERVAL_FIFTEEN_MINUTES, pIntent);
     }
 }

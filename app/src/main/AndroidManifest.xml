@@ -21,6 +21,12 @@
             </intent-filter>
         </activity>
 
+        <receiver
+            android:name=".SensorandAlarm.SensorDataReceiver"
+            android:label="@string/action_settings"
+            android:process=":remote" >
+        </receiver>
+
         <service
             android:name=".sleep.OnSleepService"
             android:enabled="true"
@@ -31,6 +37,32 @@
             android:name=".SleepChartActivity"
             android:label="@string/title_activity_sleep_chart" >
         </activity>
+
+        <service
+            android:name=".SensorandAlarm.GatherSensorData"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+
+        <receiver
+            android:name=".SensorandAlarm.RepeatSensorServiceReceiver"
+            android:label="@string/title_activity_repeat_sensor_service_receiver"
+            android:process=":remote"
+            android:theme="@style/AppTheme.NoActionBar" >
+        </receiver>
+
+        <service
+            android:name=".SensorandAlarm.SetAlarmService"
+            android:enabled="true"
+            android:exported="true" >
+        </service>
+        <receiver
+            android:name=".SensorandAlarm.SetAlarmReceiver"
+            android:process=":remote" >
+
+            <!-- define android:process=":remote" so that the BroadcastReceiver will run in a separate process -->
+            <!-- so that it will continue to stay alive if the app has closed. -->
+        </receiver>
     </application>
 
 </manifest>
