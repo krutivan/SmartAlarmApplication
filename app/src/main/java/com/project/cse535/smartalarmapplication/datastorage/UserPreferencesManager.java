@@ -29,9 +29,12 @@ public class UserPreferencesManager {
         return mUserPreferences.getBoolean("enable_automatic_checkbox",true);
     }
     public int getTargetHours(){
-        return mUserPreferences.getInt("sleep_target_hours", 50);
+
+        String hours= mUserPreferences.getString("sleep_target_hours", "14");
+        return Integer.parseInt(hours);
     }
     public int getTargetCycle(){
-        return mUserPreferences.getInt("sleep_target_cycle",7);
+        String cycle= mUserPreferences.getString("sleep_target_cycle", "7");
+        return Integer.parseInt(cycle);
     }
 }

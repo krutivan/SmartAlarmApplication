@@ -5,13 +5,12 @@
         android:summary="@string/pref_description_target_days"
         android:entries="@array/pref_target_cycle_titles"
         android:entryValues="@array/pref_target_cycle_values"
-        android:defaultValue="1">
+    >
     </ListPreference>
     <EditTextPreference android:key="sleep_target_hours"
         android:title="@string/pref_title_set_target_hours"
         android:summary="@string/pref_description_target_hours"
         android:selectAllOnFocus="true"
-        android:defaultValue="8"
         android:inputType="numberDecimal"
         android:singleLine="true"
         android:maxLines="1">

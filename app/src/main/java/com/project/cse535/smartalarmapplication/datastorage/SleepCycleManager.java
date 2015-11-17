@@ -40,6 +40,8 @@ public class SleepCycleManager {
         this._context = _context;
         pref=_context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
+        setBalanceDays(7);
+        setBalanceHours(7);
     }
     public void initRandomHistory(){
         setHours(MON,8);

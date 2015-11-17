@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.project.cse535.smartalarmapplication.SensorandAlarm.GatherSensorData;
@@ -42,7 +43,15 @@ public class MainActivity extends AppCompatActivity {
         IntentFilter filter = new IntentFilter(GatherSensorData.ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(sensorReceiver, filter);
 
-        sensorServiceRepeatAlarm();
+        Button button = (Button)findViewById(R.id.button1);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sensorServiceRepeatAlarm();
+            }
+        });
+//        sensorServiceRepeatAlarm();
+
     }
 
     @Override
@@ -81,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
         startActivity(chartIntent);
     }
     public void forceSleep(View view){
-        mContextPref.setContext(ContextPreferenceManager.SLEEP_CONTEXT_KEY, false);
-        mContextPref.setContext(ContextPreferenceManager.SLEEP_CONTEXT_KEY, true);
+        mContextPref.setContextPrefs(ContextPreferenceManager.SLEEP_CONTEXT_KEY, false);
+        mContextPref.setContextPrefs(ContextPreferenceManager.SLEEP_CONTEXT_KEY, true);
     }
 
     // Setup a recurring alarm every 15 minutes

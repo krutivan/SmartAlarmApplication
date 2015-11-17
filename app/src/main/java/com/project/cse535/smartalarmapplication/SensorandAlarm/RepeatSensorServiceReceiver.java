@@ -22,7 +22,8 @@ public class RepeatSensorServiceReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        Intent i = new Intent(context, GatherSensorData.class);
+//        Intent i = new Intent(context, GatherSensorData.class);
+        Intent i = new Intent(context, GatherDataAsyncTask.class);
 
         context.startService(i);
     }

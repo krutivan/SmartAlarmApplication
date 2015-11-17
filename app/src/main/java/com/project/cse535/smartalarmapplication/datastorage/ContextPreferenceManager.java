@@ -3,6 +3,7 @@ package com.project.cse535.smartalarmapplication.datastorage;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 import android.widget.Toast;
 
 /**
@@ -34,6 +35,9 @@ public class ContextPreferenceManager {
         this._context = _context;
         pref=_context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
+        setContextPrefs(ILLUMINATION_CONTEXT_KEY,false);
+        setContextPrefs(MOTION_CONTEXT_KEY,false);
+        setContextPrefs(SLEEP_CONTEXT_KEY,false);
     }
 
     public void registerListener(ContextPreferenceChangeListener listener){
@@ -46,16 +50,17 @@ public class ContextPreferenceManager {
         pref.unregisterOnSharedPreferenceChangeListener(listener);
     }
 
-    public void setContext(String key, Boolean value){
+    public void setContextPrefs(String key, Boolean value){
         editor.putBoolean(key,value);
         editor.commit();
+        Log.d("ContextPrefManager",key);
     }
 
-    public Boolean getContext(String key){
+    public Boolean getContextPrefs(String key){
         if (key.equals(SLEEP_CONTEXT_KEY))
             return pref.getBoolean(SLEEP_CONTEXT_KEY,false);
         else
-            return pref.getBoolean(key,true);
+            return pref.getBoolean(key,false);
     }
 
 

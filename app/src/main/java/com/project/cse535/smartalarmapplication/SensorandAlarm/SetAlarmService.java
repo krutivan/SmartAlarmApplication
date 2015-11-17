@@ -8,6 +8,8 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.project.cse535.smartalarmapplication.datastorage.SleepCycleManager;
+
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -20,10 +22,12 @@ public class SetAlarmService extends Service {
     AlarmManager alarmManager;
     private PendingIntent pendingIntent;
     Long time;
+    SleepCycleManager sleepHistory;
 
     public void onCreate(){
         super.onCreate();
         Log.d(LOG_TAG, "onCreate");
+        sleepHistory = new SleepCycleManager(this);
     }
 
     public int onStartCommand(Intent intent, int flags, int startId){
@@ -32,10 +36,17 @@ public class SetAlarmService extends Service {
         Intent myIntent = new Intent(SetAlarmService.this, SetAlarmReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(SetAlarmService.this, 0, myIntent, 0);
 
+        int balance_sleeptime = sleepHistory.getBalanceHours();
+        int balance_sleepdays = sleepHistory.getBalanceDays();
+        int targetSleep = balance_sleeptime/balance_sleepdays;
 
-        time = new GregorianCalendar().getTimeInMillis()+2*60*1000;
-        Toast.makeText(SetAlarmService.this, "Setting alarm for " + time, Toast.LENGTH_SHORT).show();
+        time = new GregorianCalendar().getTimeInMillis()+targetSleep*60*1000;
 
+        sleepHistory.setBalanceDays(balance_sleepdays-1);
+        sleepHistory.setBalanceHours(balance_sleeptime - targetSleep);
+
+        Log.d(LOG_TAG, targetSleep + "mins");
+        Toast.makeText(SetAlarmService.this, "Today's sleep hours : "+targetSleep, Toast.LENGTH_SHORT).show();
         setAlarm();
 
         stopSelf();
@@ -45,11 +56,13 @@ public class SetAlarmService extends Service {
     private void setAlarm(){
         Log.d(LOG_TAG,"setAlarm");
         Calendar calender = Calendar.getInstance();
-        calender.set(Calendar.HOUR_OF_DAY,timeHour);
+
+        calender.set(Calendar.HOUR_OF_DAY, timeHour);
         calender.set(Calendar.MINUTE, timeMinute);
 //        alarmManager.set(AlarmManager.RTC_WAKEUP, calender.getTimeInMillis(), pendingIntent);
         alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
     }
+
     @Override
     public IBinder onBind(Intent intent) {
         // TODO: Return the communication channel to the service.

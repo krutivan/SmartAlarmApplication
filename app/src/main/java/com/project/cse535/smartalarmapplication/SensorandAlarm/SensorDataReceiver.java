@@ -36,6 +36,9 @@ public class SensorDataReceiver extends BroadcastReceiver {
 
                 Intent setalarm = new Intent(context, SetAlarmService.class);
                 context.startService(setalarm);
+//                Intent setalarm = new Intent(context, SetAlarmActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                context.startActivity(setalarm);
             }
 
         }

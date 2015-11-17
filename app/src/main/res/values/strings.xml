@@ -11,4 +11,5 @@
     <string name="title_activity_repeat_sensor_service">RepeatSensorService</string>
     <string name="title_activity_repeat_sensor_service_receiver">RepeatSensorServiceReceiver
     </string>
+    <string name="title_activity_set_alarm">SetAlarmActivity</string>
 </resources>
