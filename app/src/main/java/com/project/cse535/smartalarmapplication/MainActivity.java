@@ -19,6 +19,7 @@ import com.project.cse535.smartalarmapplication.SensorandAlarm.RepeatSensorServi
 import com.project.cse535.smartalarmapplication.SensorandAlarm.SensorDataReceiver;
 import com.project.cse535.smartalarmapplication.datastorage.ContextPreferenceChangeListener;
 import com.project.cse535.smartalarmapplication.datastorage.ContextPreferenceManager;
+import com.project.cse535.smartalarmapplication.datastorage.SleepCycleManager;
 import com.project.cse535.smartalarmapplication.datastorage.UserPreferenceChangeListener;
 import com.project.cse535.smartalarmapplication.datastorage.UserPreferencesManager;
 
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     UserPreferencesManager mUserPref;
     UserPreferenceChangeListener mUserPrefChangeListener;
     SensorDataReceiver sensorReceiver ;
-
+    SleepCycleManager sleepCycleManager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         mUserPrefChangeListener = new UserPreferenceChangeListener();
         mContextPref.registerListener(mContextPrefChangeListener);
         mUserPref.registerListener(mUserPrefChangeListener);
+        sleepCycleManager = SleepCycleManager.createInstance(this);
         sensorReceiver = new SensorDataReceiver();
         IntentFilter filter = new IntentFilter(GatherSensorData.ACTION);
         LocalBroadcastManager.getInstance(this).registerReceiver(sensorReceiver, filter);

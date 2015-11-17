@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
  */
 public class SleepCycleManager {
 
+    static SleepCycleManager sleepCycleManager = null;
     // Shared Preferences
     SharedPreferences pref;
 
@@ -36,13 +37,22 @@ public class SleepCycleManager {
     public static final String BALANCE_HOURS = "balance_hours";
     public static final String BALANCE_DAYS = "balance_days";
 
-    public SleepCycleManager(Context _context) {
+    private SleepCycleManager(Context _context) {
         this._context = _context;
         pref=_context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
         setBalanceDays(7);
         setBalanceHours(7);
     }
+
+    public static SleepCycleManager createInstance(Context _context){
+        sleepCycleManager = new SleepCycleManager(_context);
+        return sleepCycleManager;
+    }
+    public static SleepCycleManager getInstance(){
+        return sleepCycleManager;
+    }
+
     public void initRandomHistory(){
         setHours(MON,8);
         setHours(TUE,9);

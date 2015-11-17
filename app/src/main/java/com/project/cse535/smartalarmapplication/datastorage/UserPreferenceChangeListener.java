@@ -19,7 +19,7 @@ public class UserPreferenceChangeListener implements OnSharedPreferenceChangeLis
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        SleepCycleManager sleepHistory = new SleepCycleManager(mContext);
+        SleepCycleManager sleepHistory = SleepCycleManager.getInstance();
         UserPreferencesManager userPrefs = new UserPreferencesManager(mContext);
         if(key.equals("enable_automatic_checkbox")) {
             boolean b=userPrefs.getIfEnabled();

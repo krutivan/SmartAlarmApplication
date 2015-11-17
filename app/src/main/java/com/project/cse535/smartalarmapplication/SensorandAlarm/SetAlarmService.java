@@ -27,7 +27,7 @@ public class SetAlarmService extends Service {
     public void onCreate(){
         super.onCreate();
         Log.d(LOG_TAG, "onCreate");
-        sleepHistory = new SleepCycleManager(this);
+        sleepHistory = SleepCycleManager.getInstance();
     }
 
     public int onStartCommand(Intent intent, int flags, int startId){
