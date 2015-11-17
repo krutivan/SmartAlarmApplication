@@ -7,6 +7,7 @@ import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.util.Log;
 
 import com.project.cse535.smartalarmapplication.MainActivity;
+import com.project.cse535.smartalarmapplication.SensorandAlarm.SetAlarmActivity;
 import com.project.cse535.smartalarmapplication.SensorandAlarm.SetAlarmService;
 import com.project.cse535.smartalarmapplication.sleep.OnSleepService;
 
@@ -47,11 +48,13 @@ public class ContextPreferenceChangeListener implements OnSharedPreferenceChange
         }
         else if(key.equals(ContextPreferenceManager.SLEEP_CONTEXT_KEY) && (sharedPreferences.getBoolean(ContextPreferenceManager.SLEEP_CONTEXT_KEY,false))==true){
             Log.d("ContextListener", ",sleep context set");
-            Intent startSleepService = new Intent(mContext,SetAlarmService.class);
-            mContext.startService(startSleepService);
+            /*Intent startSleepService = new Intent(mContext,SetAlarmService.class);
+            mContext.startService(startSleepService);*/
+            Intent startAlarmIntent = new Intent(mContext, SetAlarmActivity.class);
+            mContext.startActivity(startAlarmIntent);
         }
         else if(key.equals(ContextPreferenceManager.ALARM_CONTEXT) && (sharedPreferences.getBoolean(ContextPreferenceManager.ALARM_CONTEXT,false)==true)){
-            
+
         }
 
 

@@ -70,6 +70,11 @@
             android:enabled="true"
             android:exported="true" >
         </service>
+
+        <activity
+            android:name=".SensorandAlarm.SetAlarmActivity"
+            android:label="@string/title_activity_set_alarm" >
+        </activity>
     </application>
 
 </manifest>
