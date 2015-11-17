@@ -45,7 +45,7 @@ public class SleepChartActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        sleepHistory = new SleepCycleManager(this);
+        sleepHistory = SleepCycleManager.getInstance();
         sleepHistory.initRandomHistory();
         createDataSet();
         setContentView(R.layout.activity_sleep_chart);
