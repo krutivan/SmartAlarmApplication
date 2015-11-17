@@ -8,6 +8,8 @@ import android.os.IBinder;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.project.cse535.smartalarmapplication.MainActivity;
+import com.project.cse535.smartalarmapplication.datastorage.ContextPreferenceManager;
 import com.project.cse535.smartalarmapplication.datastorage.SleepCycleManager;
 
 import java.util.Calendar;
@@ -20,6 +22,7 @@ public class SetAlarmService extends Service {
     private static int timeHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
     private static int timeMinute = Calendar.getInstance().get(Calendar.MINUTE);
     AlarmManager alarmManager;
+    ContextPreferenceManager contextPreferenceManager;
     private PendingIntent pendingIntent;
     Long time;
     SleepCycleManager sleepHistory;
@@ -28,6 +31,7 @@ public class SetAlarmService extends Service {
         super.onCreate();
         Log.d(LOG_TAG, "onCreate");
         sleepHistory = SleepCycleManager.getInstance();
+        contextPreferenceManager = ContextPreferenceManager.getInstance();
     }
 
     public int onStartCommand(Intent intent, int flags, int startId){
@@ -42,13 +46,13 @@ public class SetAlarmService extends Service {
 
         time = new GregorianCalendar().getTimeInMillis()+targetSleep*60*1000;
 
-        sleepHistory.setBalanceDays(balance_sleepdays-1);
+        sleepHistory.setBalanceDays(balance_sleepdays - 1);
         sleepHistory.setBalanceHours(balance_sleeptime - targetSleep);
 
         Log.d(LOG_TAG, targetSleep + "mins");
         Toast.makeText(SetAlarmService.this, "Today's sleep hours : "+targetSleep, Toast.LENGTH_SHORT).show();
         setAlarm();
-
+        contextPreferenceManager.setAlarmContext(true);
         stopSelf();
         return START_NOT_STICKY;
     }

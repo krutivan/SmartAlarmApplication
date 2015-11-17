@@ -131,7 +131,7 @@ public class GatherSensorData extends Service implements SensorEventListener{
         mAccel = 0.00f;
         mAccelCurrent = SensorManager.GRAVITY_EARTH;
         mAccelLast = SensorManager.GRAVITY_EARTH;
-        contextprefs = new ContextPreferenceManager(getBaseContext());
+        contextprefs = ContextPreferenceManager.getInstance();
 
     }
 

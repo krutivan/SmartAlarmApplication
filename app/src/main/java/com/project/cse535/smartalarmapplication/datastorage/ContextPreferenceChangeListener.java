@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.util.Log;
 
+import com.project.cse535.smartalarmapplication.MainActivity;
 import com.project.cse535.smartalarmapplication.SensorandAlarm.SetAlarmService;
 import com.project.cse535.smartalarmapplication.sleep.OnSleepService;
 
@@ -35,7 +36,7 @@ public class ContextPreferenceChangeListener implements OnSharedPreferenceChange
         }
 
         //if illumination context changed and is made true
-        if(key.equals(ContextPreferenceManager.MOTION_CONTEXT_KEY) && (sharedPreferences.getBoolean(ContextPreferenceManager.MOTION_CONTEXT_KEY, false))==true){
+        else if(key.equals(ContextPreferenceManager.MOTION_CONTEXT_KEY) && (sharedPreferences.getBoolean(ContextPreferenceManager.MOTION_CONTEXT_KEY, false))==true){
             //checks if motion also true, then only sleep context set
             if (sharedPreferences.getBoolean(ContextPreferenceManager.ILLUMINATION_CONTEXT_KEY, false)==true){
                 SharedPreferences.Editor editor = sharedPreferences.edit();
@@ -44,11 +45,15 @@ public class ContextPreferenceChangeListener implements OnSharedPreferenceChange
                 Log.d("ContextListener", ",motion sleep set true");
             }
         }
-        if(key.equals(ContextPreferenceManager.SLEEP_CONTEXT_KEY) && (sharedPreferences.getBoolean(ContextPreferenceManager.SLEEP_CONTEXT_KEY,false))==true){
+        else if(key.equals(ContextPreferenceManager.SLEEP_CONTEXT_KEY) && (sharedPreferences.getBoolean(ContextPreferenceManager.SLEEP_CONTEXT_KEY,false))==true){
             Log.d("ContextListener", ",sleep context set");
             Intent startSleepService = new Intent(mContext,SetAlarmService.class);
             mContext.startService(startSleepService);
         }
+        else if(key.equals(ContextPreferenceManager.ALARM_CONTEXT) && (sharedPreferences.getBoolean(ContextPreferenceManager.ALARM_CONTEXT,false)==true)){
+            
+        }
+
 
     }
 

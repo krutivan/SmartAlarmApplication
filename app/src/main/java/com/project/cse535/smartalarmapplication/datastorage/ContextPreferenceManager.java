@@ -10,6 +10,7 @@ import android.widget.Toast;
  * Created by Kruti on 11/15/2015.
  */
 public class ContextPreferenceManager {
+    private static ContextPreferenceManager contextPreferenceManager;
     // Shared Preferences
     SharedPreferences pref;
 
@@ -29,15 +30,23 @@ public class ContextPreferenceManager {
     public static final String ILLUMINATION_CONTEXT_KEY = "illumination";
     public static final String MOTION_CONTEXT_KEY = "motion";
     public static final String SLEEP_CONTEXT_KEY = "sleep";
+    public static final String ALARM_CONTEXT = "alarm";
 
-
-    public ContextPreferenceManager(Context _context) {
+    public static ContextPreferenceManager createInstance(Context _context){
+        contextPreferenceManager = new ContextPreferenceManager(_context);
+        return contextPreferenceManager;
+    }
+    public static ContextPreferenceManager getInstance(){
+        return contextPreferenceManager;
+    }
+    private ContextPreferenceManager(Context _context) {
         this._context = _context;
         pref=_context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
         setContextPrefs(ILLUMINATION_CONTEXT_KEY,false);
         setContextPrefs(MOTION_CONTEXT_KEY,false);
         setContextPrefs(SLEEP_CONTEXT_KEY,false);
+        setAlarmContext(false);
     }
 
     public void registerListener(ContextPreferenceChangeListener listener){
@@ -53,7 +62,7 @@ public class ContextPreferenceManager {
     public void setContextPrefs(String key, Boolean value){
         editor.putBoolean(key,value);
         editor.commit();
-        Log.d("ContextPrefManager",key);
+        Log.d("ContextPrefManager", key);
     }
 
     public Boolean getContextPrefs(String key){
@@ -63,5 +72,12 @@ public class ContextPreferenceManager {
             return pref.getBoolean(key,false);
     }
 
+    public void setAlarmContext(Boolean alarm){
+        editor.putBoolean(ALARM_CONTEXT, alarm);
+        editor.commit();
+    }
 
+    public boolean getAlarmContext(){
+        return pref.getBoolean(ALARM_CONTEXT,false);
+    }
 }

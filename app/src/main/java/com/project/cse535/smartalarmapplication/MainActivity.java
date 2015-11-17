@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mContextPref = new ContextPreferenceManager(this);
+        mContextPref = ContextPreferenceManager.createInstance(this);
         mUserPref = new UserPreferencesManager(this);
         mContextPrefChangeListener = new ContextPreferenceChangeListener();
         mUserPrefChangeListener = new UserPreferenceChangeListener();
@@ -90,10 +90,6 @@ public class MainActivity extends AppCompatActivity {
     public void viewSleepPattern(View view){
         Intent chartIntent = new Intent(this,SleepChartActivity.class);
         startActivity(chartIntent);
-    }
-    public void forceSleep(View view){
-        mContextPref.setContextPrefs(ContextPreferenceManager.SLEEP_CONTEXT_KEY, false);
-        mContextPref.setContextPrefs(ContextPreferenceManager.SLEEP_CONTEXT_KEY, true);
     }
 
     // Setup a recurring alarm every 15 minutes
