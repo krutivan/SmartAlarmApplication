@@ -17,6 +17,8 @@ import android.widget.Toast;
 import com.project.cse535.smartalarmapplication.SensorandAlarm.GatherSensorData;
 import com.project.cse535.smartalarmapplication.SensorandAlarm.RepeatSensorServiceReceiver;
 import com.project.cse535.smartalarmapplication.SensorandAlarm.SensorDataReceiver;
+import com.project.cse535.smartalarmapplication.SensorandAlarm.SetAlarmReceiver;
+import com.project.cse535.smartalarmapplication.SensorandAlarm.StopAlarmReceiver;
 import com.project.cse535.smartalarmapplication.datastorage.ContextPreferenceChangeListener;
 import com.project.cse535.smartalarmapplication.datastorage.ContextPreferenceManager;
 import com.project.cse535.smartalarmapplication.datastorage.SleepCycleManager;
@@ -30,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
     UserPreferenceChangeListener mUserPrefChangeListener;
     SensorDataReceiver sensorReceiver ;
     SleepCycleManager sleepCycleManager;
+    AlarmManager stopalarmManager;
+    private PendingIntent stoppendingIntent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,10 +54,24 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sensorServiceRepeatAlarm();
+                if(mUserPref.getIfEnabled())
+                    sensorServiceRepeatAlarm();
+                else
+                    Toast.makeText(MainActivity.this, "Please enable the application.", Toast.LENGTH_SHORT).show();
             }
         });
-//        sensorServiceRepeatAlarm();
+//        Button button2 = (Button)findViewById(R.id.button2);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//                stopalarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+//                Intent myIntent = new Intent(MainActivity.this, SetAlarmReceiver.class);
+//
+//                myIntent.putExtra("stopbundle","stop");
+//                stoppendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, myIntent, 0);
+//            }
+//        });
 
     }
 
@@ -94,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Setup a recurring alarm every 15 minutes
     public void sensorServiceRepeatAlarm() {
-        Toast.makeText(MainActivity.this, "Scheduling Alarm.", Toast.LENGTH_SHORT).show();
+        Toast.makeText(MainActivity.this, "Starting Sensor monitoring.", Toast.LENGTH_SHORT).show();
         // Construct an intent that will execute the RepearSensorServiceReceiver
         Intent intent = new Intent(getApplicationContext(), RepeatSensorServiceReceiver.class);
         // Create a PendingIntent to be triggered when the alarm goes off

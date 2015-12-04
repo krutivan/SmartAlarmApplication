@@ -26,7 +26,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class SetAlarmActivity extends AppCompatActivity {
-    private static final String LOG_TAG = "SetAlarmService::";
+    private static final String LOG_TAG = "SetAlarmActivity::";
     private static int timeHour = Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
     private static int timeMinute = Calendar.getInstance().get(Calendar.MINUTE);
     AlarmManager alarmManager;
@@ -40,6 +40,8 @@ public class SetAlarmActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_set_alarm2);
+
         Log.d(LOG_TAG, "onCreate");
         sleepHistory = SleepCycleManager.getInstance();
         contextPreferenceManager = ContextPreferenceManager.getInstance();

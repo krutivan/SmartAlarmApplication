@@ -1,20 +1,17 @@
 package com.project.cse535.smartalarmapplication.SensorandAlarm;
 
-/**
- * Created by tyagi on 11/16/15.
- */
 import android.content.Context;
 import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
-import android.os.Bundle;
 import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 
-import com.project.cse535.smartalarmapplication.datastorage.ContextPreferenceManager;
-
-public class SetAlarmReceiver extends WakefulBroadcastReceiver {
+/**
+ * Created by tyagi on 11/17/15.
+ */
+public class StopAlarmReceiver extends WakefulBroadcastReceiver {
     static final String LOG_TAG = "SetAlarmAReceiver::";
 
     @Override
@@ -23,7 +20,7 @@ public class SetAlarmReceiver extends WakefulBroadcastReceiver {
 //        ContextPreferenceManager.getInstance().setAlarmContext(false);
         Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
         Ringtone ringtone = RingtoneManager.getRingtone(context, uri);
-        ringtone.play();
+        ringtone.stop();
 //        ringtone.stop
     }
 }

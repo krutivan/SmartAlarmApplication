@@ -41,8 +41,8 @@ public class SleepCycleManager {
         this._context = _context;
         pref=_context.getSharedPreferences(PREF_NAME, PRIVATE_MODE);
         editor = pref.edit();
-        setBalanceDays(7);
-        setBalanceHours(7);
+        /*setBalanceDays(7);
+        setBalanceHours(7);*/
     }
 
     public static SleepCycleManager createInstance(Context _context){
@@ -71,7 +71,11 @@ public class SleepCycleManager {
         editor.commit();
     }
     public void setBalanceDays(int days){
-        editor.putInt(BALANCE_DAYS,days);
+        if(days>0)
+            editor.putInt(BALANCE_DAYS,days);
+        else
+            editor.putInt(BALANCE_DAYS,8);
+
         editor.commit();
     }
 
@@ -80,7 +84,11 @@ public class SleepCycleManager {
     }
 
     public void setBalanceHours(int hours){
-        editor.putInt(BALANCE_HOURS,hours);
+        if(hours>0)
+            editor.putInt(BALANCE_HOURS,hours);
+        else
+            editor.putInt(BALANCE_HOURS,8);
+//        editor.putLong(BALANCE_HOURS,hours);
         editor.commit();
     }
 

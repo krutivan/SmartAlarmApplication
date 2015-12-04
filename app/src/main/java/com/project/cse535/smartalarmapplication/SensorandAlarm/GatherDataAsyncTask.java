@@ -21,7 +21,7 @@ public class GatherDataAsyncTask extends Service implements SensorEventListener 
     public GatherDataAsyncTask() {
     }
 
-    private static final String LOG_TAG = "GatherSensorData::";
+    private static final String LOG_TAG = "GatherSensorDataAT::";
     public static final String ACTION = "com.project.cse535.smartalarmapplication.SensorandAlarm.GatherSensorData";
     int count=0;
     private SensorManager sensorManager;    // this instance of SensorManager class will be used to get a reference to the sensor service.
@@ -75,16 +75,11 @@ public class GatherDataAsyncTask extends Service implements SensorEventListener 
             }
 
 
-            if(count == 50) {
-                mAccel_avg = mAccel_avg/50;
-                light_avg = light_avg/50;
+            if(count == 100) {
+                mAccel_avg = mAccel_avg/100;
+                light_avg = light_avg/100;
                 Log.d(LOG_TAG, "mAccel_avg : " + Float.toString(mAccel_avg));
                 Log.d(LOG_TAG,"lightsensor_avg : "+Float.toString(light_avg));
-//            bundle.putFloat("accelVal", mAccel_avg);
-//            bundle.putFloat("lightVal", light_avg);
-//
-//            in.putExtras(bundle);
-//            LocalBroadcastManager.getInstance(this).sendBroadcast(in);
                 if(mAccel_avg < 0.5){
                     contextprefs.setContextPrefs(ContextPreferenceManager.MOTION_CONTEXT_KEY, true);
 //                Log.d(LOG_TAG,"motionsensor_avg_set : true");
